@@ -56,17 +56,23 @@ jobs:
             --add-data "assets:assets" \
             main.py
 
-      - name: Package .app as zip
+      - name: Package .app as .dmg
         run: |
-          ditto -c -k --sequesterRsrc --keepParent \
-            dist/OrangeBiliRequest.app \
-            OrangeBiliRequest-macOS-arm64.zip
+          rm -rf build/dmg
+          mkdir -p build/dmg
+          cp -R dist/OrangeBiliRequest.app build/dmg/
+          ln -s /Applications build/dmg/Applications
+          hdiutil create \
+            -volname "Orange BiliRequest" \
+            -srcfolder build/dmg \
+            -ov -format UDZO \
+            OrangeBiliRequest-macOS-arm64.dmg
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: OrangeBiliRequest-macOS-arm64
-          path: OrangeBiliRequest-macOS-arm64.zip
+          path: OrangeBiliRequest-macOS-arm64.dmg
           retention-days: 30
 
       - name: Attach to GitHub Release (on tag or input)
@@ -79,7 +85,8 @@ jobs:
             TAG="${GITHUB_REF_NAME}"
           fi
           if gh release view "$TAG" >/dev/null 2>&1; then
-            gh release upload "$TAG" OrangeBiliRequest-macOS-arm64.zip --clobber
+            gh release upload "$TAG" OrangeBiliRequest-macOS-arm64.dmg --clobber
+            gh release delete-asset "$TAG" OrangeBiliRequest-macOS-arm64.zip -y || true
           else
-            gh release create "$TAG" OrangeBiliRequest-macOS-arm64.zip --title "$TAG" --generate-notes
+            gh release create "$TAG" OrangeBiliRequest-macOS-arm64.dmg --title "$TAG" --generate-notes
           fi
