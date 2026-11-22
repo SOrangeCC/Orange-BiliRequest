@@ -119,12 +119,18 @@ class ObsServerTests(unittest.TestCase):
                 html = resp.read().decode("utf-8")
                 self.assertIn("弹幕点歌", html)
                 self.assertIn("弹幕投票", html)
+                self.assertIn('data-theme="crimson"', html)
 
             with urllib.request.urlopen(f"{server.base_url}/api/state", timeout=2) as resp:
                 self.assertEqual(resp.status, 200)
                 data = json.loads(resp.read().decode("utf-8"))
+                self.assertEqual(data["obs_theme"], "blue")
                 self.assertEqual(data["songs"]["count"], 1)
                 self.assertEqual(data["songs"]["items"][0]["song"], "苏州河")
+
+            state.set_obs_theme("crimson")
+            state.set_obs_theme("invalid")
+            self.assertEqual(state.snapshot()["obs_theme"], "crimson")
         finally:
             server.stop()
 

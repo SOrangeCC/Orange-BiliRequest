@@ -105,6 +105,8 @@ class BoardState:
 
         # OBS 展示模式: "auto" | "songs" | "vote" | "both"
         self._obs_mode: str = "auto"
+        # OBS 颜色主题: "blue" | "crimson"
+        self._obs_theme: str = "blue"
         self._active_tab: str = "songs"
 
     def _bump(self) -> None:
@@ -135,6 +137,14 @@ class BoardState:
         with self._lock:
             if self._obs_mode != mode:
                 self._obs_mode = mode
+                self._bump()
+
+    def set_obs_theme(self, theme: str) -> None:
+        if theme not in ("blue", "crimson"):
+            return
+        with self._lock:
+            if self._obs_theme != theme:
+                self._obs_theme = theme
                 self._bump()
 
     def set_active_tab(self, tab: str) -> None:
@@ -300,6 +310,7 @@ class BoardState:
                 "version": self._version,
                 "listening": self._listening,
                 "obs_mode": self._obs_mode,
+                "obs_theme": self._obs_theme,
                 "effective_mode": effective_mode,
                 "songs": {
                     "items": song_list,

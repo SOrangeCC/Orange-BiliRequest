@@ -33,10 +33,48 @@ OVERLAY_HTML = r"""<!DOCTYPE html>
     --gold-deep: #E59E1B;
     --badge-gold-bg: linear-gradient(135deg, #FFE074 0%, #F7C232 100%);
     --badge-normal-bg: rgba(255, 255, 255, 0.62);
+    --badge-normal-color: #4C5E73;
     --pill-bg: rgba(255, 255, 255, 0.48);
+    --pill-border: rgba(255, 255, 255, 0.72);
     --bar-track: rgba(255, 255, 255, 0.55);
+    --bar-border: rgba(255, 255, 255, 0.65);
     --bar-fill: linear-gradient(90deg, rgba(126, 178, 245, 0.75) 0%, rgba(92, 152, 235, 0.88) 100%);
     --bar-fill-lead: linear-gradient(90deg, rgba(255, 214, 102, 0.85) 0%, rgba(247, 186, 50, 0.92) 100%);
+    --item-hover: rgba(255, 255, 255, 0.28);
+    --deco-1: radial-gradient(circle, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 72%);
+    --deco-2: radial-gradient(circle, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0) 72%);
+    --trigger-bg: rgba(255, 255, 255, 0.85);
+    --trigger-color: #3D6296;
+    --option-label-color: #2E4A73;
+    --option-stats-color: #3B5578;
+  }
+
+  body[data-theme="crimson"] {
+    --card-bg: linear-gradient(145deg, rgba(28, 20, 23, 0.92) 0%, rgba(16, 12, 14, 0.94) 100%);
+    --card-border: rgba(224, 184, 112, 0.44);
+    --card-shadow: 0 16px 38px rgba(0, 0, 0, 0.58), inset 0 1px 0 rgba(232, 198, 132, 0.20);
+    --title-blue: #E8C684;
+    --song-blue: #F5ECEA;
+    --text-muted: #A99A9C;
+    --text-dark: #D9CECC;
+    --gold: #E8C476;
+    --gold-deep: #E8C476;
+    --badge-gold-bg: linear-gradient(135deg, #ECCB82 0%, #C69643 100%);
+    --badge-normal-bg: rgba(168, 32, 46, 0.38);
+    --badge-normal-color: #F4DFB6;
+    --pill-bg: rgba(176, 36, 48, 0.34);
+    --pill-border: rgba(220, 74, 88, 0.55);
+    --bar-track: rgba(255, 255, 255, 0.06);
+    --bar-border: rgba(224, 184, 112, 0.20);
+    --bar-fill: linear-gradient(90deg, rgba(162, 28, 42, 0.78) 0%, rgba(212, 54, 68, 0.90) 100%);
+    --bar-fill-lead: linear-gradient(90deg, rgba(196, 42, 56, 0.86) 0%, rgba(229, 194, 125, 0.82) 100%);
+    --item-hover: rgba(196, 42, 56, 0.16);
+    --deco-1: radial-gradient(circle, rgba(196, 38, 52, 0.28) 0%, rgba(196, 38, 52, 0) 72%);
+    --deco-2: radial-gradient(circle, rgba(229, 194, 125, 0.16) 0%, rgba(229, 194, 125, 0) 72%);
+    --trigger-bg: rgba(168, 32, 46, 0.42);
+    --trigger-color: #F4DFB6;
+    --option-label-color: #F5ECEA;
+    --option-stats-color: #F2DFC0;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -82,7 +120,7 @@ OVERLAY_HTML = r"""<!DOCTYPE html>
     width: 130px;
     height: 130px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 72%);
+    background: var(--deco-1);
     top: 34px;
     left: 52%;
     pointer-events: none;
@@ -93,7 +131,7 @@ OVERLAY_HTML = r"""<!DOCTYPE html>
     width: 170px;
     height: 170px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0) 72%);
+    background: var(--deco-2);
     bottom: -55px;
     right: -35px;
     pointer-events: none;
@@ -128,7 +166,7 @@ OVERLAY_HTML = r"""<!DOCTYPE html>
     padding: 4px 13px;
     border-radius: 999px;
     background: var(--pill-bg);
-    border: 1px solid rgba(255, 255, 255, 0.72);
+    border: 1px solid var(--pill-border);
     font-size: 13px;
     font-weight: 700;
     color: var(--gold-deep);
@@ -187,7 +225,7 @@ OVERLAY_HTML = r"""<!DOCTYPE html>
   }
 
   .song-item:hover {
-    background: rgba(255, 255, 255, 0.28);
+    background: var(--item-hover);
   }
 
   .rank-badge {
@@ -200,7 +238,7 @@ OVERLAY_HTML = r"""<!DOCTYPE html>
     font-size: 14px;
     font-weight: 800;
     background: var(--badge-normal-bg);
-    color: var(--text-dark);
+    color: var(--badge-normal-color);
     box-shadow: 0 2px 6px rgba(60, 90, 140, 0.08);
   }
 
@@ -261,7 +299,7 @@ OVERLAY_HTML = r"""<!DOCTYPE html>
     position: relative;
     border-radius: 13px;
     background: var(--bar-track);
-    border: 1px solid rgba(255, 255, 255, 0.65);
+    border: 1px solid var(--bar-border);
     overflow: hidden;
     padding: 9px 12px;
   }
@@ -292,8 +330,8 @@ OVERLAY_HTML = r"""<!DOCTYPE html>
     height: 26px;
     padding: 0 8px;
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.85);
-    color: var(--song-blue);
+    background: var(--trigger-bg);
+    color: var(--trigger-color);
     font-size: 13px;
     font-weight: 800;
     display: flex;
@@ -312,7 +350,7 @@ OVERLAY_HTML = r"""<!DOCTYPE html>
     min-width: 0;
     font-size: 15px;
     font-weight: 700;
-    color: #2E4A73;
+    color: var(--option-label-color);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -323,7 +361,7 @@ OVERLAY_HTML = r"""<!DOCTYPE html>
     text-align: right;
     font-size: 13px;
     font-weight: 700;
-    color: #3B5578;
+    color: var(--option-stats-color);
     font-variant-numeric: tabular-nums;
   }
 
@@ -385,6 +423,7 @@ OVERLAY_HTML = r"""<!DOCTYPE html>
 <script>
   const params = new URLSearchParams(window.location.search);
   const urlMode = params.get("mode") || "auto";
+  const urlTheme = params.get("theme") || "";
   const MAX_SONGS_SHOWN = 8;
   let lastVersion = -1;
 
@@ -404,6 +443,9 @@ OVERLAY_HTML = r"""<!DOCTYPE html>
   }
 
   function render(data) {
+    const theme = urlTheme || data.obs_theme || "blue";
+    document.body.dataset.theme = theme;
+
     const mode = urlMode === "auto" ? data.effective_mode : urlMode;
     const songCard = document.getElementById("songCard");
     const voteCard = document.getElementById("voteCard");

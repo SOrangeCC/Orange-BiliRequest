@@ -464,6 +464,12 @@ class SongDisplayWindow(QWidget):
         self.obs_mode_combo.addItem("双板同屏", "both")
         self.obs_mode_combo.currentIndexChanged.connect(self._on_obs_mode_changed)
 
+        self.obs_theme_combo = QComboBox()
+        self.obs_theme_combo.setObjectName("comboBox")
+        self.obs_theme_combo.addItem("晴空蓝", "blue")
+        self.obs_theme_combo.addItem("黑红金", "crimson")
+        self.obs_theme_combo.currentIndexChanged.connect(self._on_obs_theme_changed)
+
         self.copy_obs_btn = QPushButton("复制 OBS 链接")
         self.copy_obs_btn.setObjectName("tonalButton")
         self.copy_obs_btn.setCursor(Qt.PointingHandCursor)
@@ -476,6 +482,7 @@ class SongDisplayWindow(QWidget):
 
         obs_layout.addWidget(obs_title)
         obs_layout.addWidget(self.obs_mode_combo)
+        obs_layout.addWidget(self.obs_theme_combo)
         obs_layout.addStretch(1)
         obs_layout.addWidget(self.copy_obs_btn)
         obs_layout.addWidget(self.preview_obs_btn)
@@ -698,6 +705,11 @@ class SongDisplayWindow(QWidget):
         mode = self.obs_mode_combo.currentData()
         if mode:
             self.state.set_obs_mode(mode)
+
+    def _on_obs_theme_changed(self) -> None:
+        theme = self.obs_theme_combo.currentData()
+        if theme:
+            self.state.set_obs_theme(theme)
 
     def _copy_obs_url(self) -> None:
         mode = self.obs_mode_combo.currentData() or "auto"
